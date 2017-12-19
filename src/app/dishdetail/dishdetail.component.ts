@@ -26,7 +26,6 @@ export class DishdetailComponent implements OnInit {
 
     formErrors = {
       'author': '',
-      'rating': '',
       'comment': ''
     };
   
@@ -35,9 +34,6 @@ export class DishdetailComponent implements OnInit {
         'required':      'Author is required.',
         'minlength':     'Author must be at least 2 characters long.',
         'maxlength':     'Author cannot be more than 25 characters long.'
-      },
-      'rating': {
-        'required':      'Rating is required.'
       },
       'comment': {
         'required':      'Comment is required.'
@@ -87,8 +83,9 @@ export class DishdetailComponent implements OnInit {
     }
 
     onSubmit() {
-      const comment = this.commentForm.value;
-      this.dish.comments.push(comment);
+      this.comment = this.commentForm.value;
+      this.comment.date = new Date().toISOString();
+      this.dish.comments.push(this.comment);
       this.commentForm.reset({
         author: '',
         rating: '5',
