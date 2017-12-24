@@ -57,4 +57,12 @@
   </md-card-content>
 </md-card>
 
+<div [hidden]="dish || errMsg">
+  <md-spinner></md-spinner><h4>Loading . . . Please Wait</h4>
+</div>
+<div *ngIf="errMsg">
+  <h2>Error</h2>
+  <h4>{{errMsg}}</h4>
+</div>
+
 </div>
