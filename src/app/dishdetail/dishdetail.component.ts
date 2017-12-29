@@ -26,6 +26,8 @@ export class DishdetailComponent implements OnInit {
 
     errMsg: string;
 
+    dishcopy = null;
+
     formErrors = {
       'author': '',
       'comment': ''
@@ -57,8 +59,8 @@ export class DishdetailComponent implements OnInit {
       
       this.route.params
         .switchMap((params: Params) => this.dishService.getDish(+params['id']))
-        .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },
-        errMsg => this.errMsg = <any>errMsg);
+        .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },
+        errMsg =>  { this.dish = null; this.errMsg = <any>errMsg; });
 
       let id = +this.route.snapshot.params['id'];
       this.dishService.getDish(id).subscribe(dish => this.dish = dish,
@@ -78,9 +80,9 @@ export class DishdetailComponent implements OnInit {
     //Comment form
     createForm(): void {
       this.commentForm = this.fb.group({
-        author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
         rating: ['5', Validators.required ],
         comment: ['', Validators.required ],
+        author: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
         date: [new Date]
       });
 
@@ -93,11 +95,13 @@ export class DishdetailComponent implements OnInit {
     onSubmit() {
       this.comment = this.commentForm.value;
       this.comment.date = new Date().toISOString();
-      this.dish.comments.push(this.comment);
+      this.dishcopy.comments.push(this.comment);
+      this.dishcopy.save()
+        .subscribe(dish => { this.dish = dish; console.log(this.dish); });
       this.commentForm.reset({
-        author: '',
         rating: '5',
         comment: '',
+        author: '',
         date: new Date
       });
     }
