@@ -17,6 +17,7 @@ import { DishdetailComponent } from './dishdetail/dishdetail.component';
 import { DishService } from './services/dish.service';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { FeedbackService } from './services/feedback.service';
 import { ProcessHttpService  } from './services/process-http.service';
 
 import { HeaderComponent } from './header/header.component';
@@ -30,7 +31,6 @@ import { LoginComponent } from './login/login.component';
 
 import { baseURL } from './shared/baseurl';
 import { HighlightDirective } from './directives/highlight.directive';
-
 
 @NgModule({
   declarations: [
@@ -63,6 +63,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     DishService,
     PromotionService,
     LeaderService,
+    FeedbackService,
     ProcessHttpService,
     {provide: 'BaseURL', useValue: baseURL}
   ],
